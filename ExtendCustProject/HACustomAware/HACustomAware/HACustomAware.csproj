@@ -31,20 +31,29 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PX.BusinessProcess">
+      <HintPath>..\..\..\..\..\AcuInstances\ACU22R2\ACU22R2\Bin\PX.BusinessProcess.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PX.Common">
       <HintPath>..\..\..\..\..\AcuInstances\ACU22R2\ACU22R2\Bin\PX.Common.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PX.Common.Std">
       <HintPath>..\..\..\..\..\AcuInstances\ACU22R2\ACU22R2\Bin\PX.Common.Std.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PX.CS.Contracts">
       <HintPath>..\..\..\..\..\AcuInstances\ACU22R2\ACU22R2\Bin\PX.CS.Contracts.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PX.Data">
       <HintPath>..\..\..\..\..\AcuInstances\ACU22R2\ACU22R2\Bin\PX.Data.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PX.Objects">
       <HintPath>..\..\..\..\..\AcuInstances\ACU22R2\ACU22R2\Bin\PX.Objects.DLL</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -54,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DACExt\CustProjectExt.cs" />
-    <Compile Include="Examples.cs" />
+    <Compile Include="NotificationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
