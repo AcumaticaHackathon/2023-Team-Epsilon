@@ -10,17 +10,7 @@ using PX.Objects.EP;
 //using PX.Mail;
 using PX.Objects.CR;
 using PX.Common;
-using PX.PushNotifications;
-
-using PX.Api.Mobile.PushNotifications;
-using PX.BusinessProcess.DAC;
-using PX.BusinessProcess.Event;
-using PX.BusinessProcess.Subscribers;
-using PX.BusinessProcess.Subscribers.ActionHandlers;
-using PX.BusinessProcess.Subscribers.Factories;
 using PX.BusinessProcess.UI;
-using PX.Data.PushNotifications;
-
 
 namespace HACustomAware
 {
@@ -41,9 +31,6 @@ namespace HACustomAware
 
                     Notification notification = PXSelect<Notification, Where<Notification.name,
                         Equal<Required<Notification.name>>>>.Select(graph, testNoifID);
-
-                    CWGBIntegration integration = PXSelect<CWGBIntegration, Where<CWGBIntegration.intid,
-                        Equal<Required<CWProcessFilter.intid>>>>.Select(graph, intID);
 
                     TemplateNotificationGenerator sender =
                         TemplateNotificationGenerator.Create(integration, notification.NotificationID.Value);

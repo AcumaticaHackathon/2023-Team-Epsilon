@@ -1,9 +1,7 @@
 ﻿using PX.Data;
 using PX.Objects;
-//using PX.SM;
+using PX.SM;
 using System;
-using PX.Objects.SM;
-
 
 // todo: can't reference PX.SM.CustProject using visual studio project
 // all this is inline code on the package.
@@ -12,7 +10,7 @@ using PX.Objects.SM;
 namespace HACustomAware.DACExt
 {
    // public class CustProjectExt : PXCacheExtension<PX.SM.CustProject>
-    public class CustProjectExt : PXCacheExtension<PX.Objects.SM.CustProject>
+    public class CustProjectExt : PXCacheExtension<CustProject>
     {
         #region UsrAuthorEmail
         [PXDBString(255)]
