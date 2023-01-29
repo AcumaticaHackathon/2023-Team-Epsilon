@@ -4,7 +4,6 @@ using PX.Data.ReferentialIntegrity.Attributes;
 using PX.SM;
 using System;
 using System.Diagnostics;
-using static HA.Objects.Summit2023.Epsilon.CustomAware.CustProjectExt;
 
 namespace HA.Objects.Summit2023.Epsilon.CustomAware {
 
@@ -104,28 +103,28 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         #endregion
 
         #region AuthorEmail
-        public abstract class authorEmail : PX.Data.BQL.BqlString.Field<authorEmail> { }
+        public abstract class authorEmail : BqlString.Field<authorEmail> { }
         [PXDBString(255)]
         [PXUIField(DisplayName = "Author Email")]
         public virtual string AuthorEmail { get; set; }
         #endregion
 
         #region AuthorName
-        public abstract class authorName : PX.Data.BQL.BqlString.Field<authorName> { }
+        public abstract class authorName : BqlString.Field<authorName> { }
         [PXDBString(255)]
         [PXUIField(DisplayName = "Author Name")]
         public virtual string AuthorName { get; set; }
         #endregion
 
         #region AuthorComments
-        public abstract class authorComments : PX.Data.BQL.BqlString.Field<authorComments> { }
+        public abstract class authorComments : BqlString.Field<authorComments> { }
         [PXDBText]
         [PXUIField(DisplayName = "Author Comments")]
         public virtual string AuthorComments { get; set; }
         #endregion
 
         #region AuthorPhone
-        public abstract class authorPhone : PX.Data.BQL.BqlString.Field<authorPhone> { }
+        public abstract class authorPhone : BqlString.Field<authorPhone> { }
         [PXDBString(15, IsUnicode = true)]
         [PXUIField(DisplayName = "Author Phone")]
         public virtual string AuthorPhone { get; set; }

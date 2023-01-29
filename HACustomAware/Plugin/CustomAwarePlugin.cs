@@ -58,7 +58,7 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
                 var projects = projectListGraph.Projects.SelectMain().Select(row => GetProject(projectListGraph, row)).ToArray();
                 var assem = Assembly.GetAssembly(GetType());
                 var assemName = assem.GetName();
-                WriteLog($"{machineName}/{userName}/{scopeUser}/{assem.FullName}/{assem.CodeBase}");
+                //WriteLog($"{machineName}/{userName}/{scopeUser}/{assem.FullName}/{assem.CodeBase}");
                 var pxDataAssem = Assembly.GetAssembly(typeof(BqlInt));
                 var pxDataAssemName = pxDataAssem.GetName();
                 var webSite = GetWebSite();
@@ -85,11 +85,11 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         }
 
         private void SaveToHistoryDetails(int recordID, HAPublishHistoryDetail[] projects) {
+            Guid? userID = new Guid?(PXAccess.GetUserID());
             using (PXTransactionScope transactionScope = new PXTransactionScope()) {
-                DateTime utcNow = PXTimeZoneInfo.UtcNow;
-                Guid? userID = new Guid?(PXAccess.GetUserID());
                 int lineNbr = 1;
                 foreach (var proj in projects) {
+                    DateTime utcNow = PXTimeZoneInfo.UtcNow;
                     var histFields = new PXDataFieldAssign[] {
                         new PXDataFieldAssign<HAPublishHistoryDetail.recordID>(recordID),
                         new PXDataFieldAssign<HAPublishHistoryDetail.lineNbr>(lineNbr),
@@ -103,7 +103,6 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
                         new PXDataFieldAssign<HAPublishHistoryDetail.custCreatedByID>(proj.CustCreatedByID),
                         new PXDataFieldAssign<HAPublishHistoryDetail.custCreatedDateTime>(proj.CustCreatedDateTime),
                         new PXDataFieldAssign<HAPublishHistoryDetail.screenNames>(proj.ScreenNames),
-                        new PXDataFieldAssign<HAPublishHistoryDetail.authorComments>(proj.AuthorComments),
                         new PXDataFieldAssign<HAPublishHistoryDetail.isPublished>(proj.IsPublished),
                         new PXDataFieldAssign<HAPublishHistoryDetail.isWorking>(proj.IsWorking),
                         new PXDataFieldAssign<HAPublishHistoryDetail.authorComments>(proj.AuthorComments),
@@ -116,7 +115,7 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
                         new PXDataFieldAssign<HAPublishHistoryDetail.lastModifiedByID>(userID),
                         new PXDataFieldAssign<HAPublishHistoryDetail.lastModifiedDateTime>(utcNow)
                     };
-                    var inserted = PXDatabase.Insert<HAPublishHistory>(histFields);
+                    var inserted = PXDatabase.Insert<HAPublishHistoryDetail>(histFields);
                     lineNbr++;
                 }
                 transactionScope.Complete();
