@@ -10,20 +10,20 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Acu22R2", "http://localhost
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		ProjectReferences = "{9bc6d61a-5d4b-4d57-bc6b-5e3f9d04377e}|Acumatica.Hackathon.2023-Epsilon.HACustomAware.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Acu21R2"
-		Debug.AspNetCompiler.PhysicalPath = "D:\AcuSites\Acu21R2\"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\AcuInstances\ACU22R2\ACU22R2\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Acu21R2\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/Acu21R2"
-		Release.AspNetCompiler.PhysicalPath = "D:\AcuSites\Acu21R2\"
+		Release.AspNetCompiler.PhysicalPath = "..\..\AcuInstances\ACU22R2\ACU22R2\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Acu21R2\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "D:\AcuSites\Acu21R2\"
+		SlnRelativePath = "..\..\AcuInstances\ACU22R2\ACU22R2\"
 	EndProjectSection
 EndProject
 Global
@@ -34,7 +34,6 @@ Global
 		{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50BC1D1A-63D0-441A-BB7C-D8D8B20C8497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50BC1D1A-63D0-441A-BB7C-D8D8B20C8497}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
