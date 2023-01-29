@@ -196,6 +196,10 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         private HAPublishHistoryDetail GetProject(ProjectList projectListGraph, CustProject row) {
             string screenNames = (string)FieldSelecting<CustProject.screenNames>(projectListGraph, row) as string;
             bool? isPublished = (bool?) FieldSelecting<CustProject.isPublished>(projectListGraph, row) as bool?;
+
+            CustProjectExt projectExt = row.GetExtension<CustProjectExt>();
+
+
             //WriteLog($"{row.Level}/{row.Name}/{row.Description}/{isPublished}/{row.LastModifiedDateTime}/{screenNames}");
             return new HAPublishHistoryDetail() {
                 Level = row.Level,
@@ -209,6 +213,10 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
                 IsPublished= isPublished,
                 ProjID= row.ProjID,
                 ScreenNames= screenNames,
+                AuthorName = projectExt.UsrAuthorName,
+                AuthorComments= projectExt.UsrAuthorComments,
+                AuthorEmail= projectExt.UsrAuthorEmail,
+                AuthorPhone= projectExt.UsrAuthorPhone,
             };
         }
 
