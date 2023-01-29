@@ -61,8 +61,8 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         #region Name
         public abstract class name : BqlString.Field<name> { }
         [PXDBString(255, InputMask = "", IsUnicode = true)]
-        [PXUIField(DisplayName = "Project Name", Visibility = PXUIVisibility.SelectorVisible)]
-        [PXSelector(typeof(name))]
+        [PXUIField(DisplayName = "Project Name", IsReadOnly = true, Visibility = PXUIVisibility.SelectorVisible)]
+        [PXSelector(typeof(Search<CustProject.name, Where<CustProject.name, Equal<Current<name>>>>))]
         public virtual string Name { get; set; }
         #endregion
 
@@ -133,6 +133,7 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         #region CustCreatedByID
         public abstract class custCreatedByID : BqlGuid.Field<custCreatedByID> { }
         [HADBByID(DisplayName = "Cust. Imported By")]
+        [PXSelector(typeof(Search<Users.fullName, Where<Users.pKID, Equal<Current<custCreatedByID>>>>))]
         public virtual Guid? CustCreatedByID { get; set; }
         #endregion
 
@@ -145,6 +146,7 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         #region CustLastModifiedByID
         public abstract class custLastModifiedByID : BqlGuid.Field<custLastModifiedByID> { }
         [HADBByID(DisplayName = "Cust. Modified By")]
+        [PXSelector(typeof(Search<Users.fullName, Where<Users.pKID, Equal<Current<custLastModifiedByID>>>>))]
         public virtual Guid? CustLastModifiedByID { get; set; }
         #endregion
 

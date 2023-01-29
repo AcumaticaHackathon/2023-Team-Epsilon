@@ -79,6 +79,7 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
                 //};
                 int recordID = SaveToHistory();
                 SaveToHistoryDetails(recordID, projects);
+                CustomUtils.SendEmail(recordID);
             } catch (Exception ex) {
                 WriteLog(ex.Message);
             }

@@ -96,6 +96,7 @@
     <Compile Include="Graph\HAPublishHistoryMaint.cs" />
     <Compile Include="Attributes\HAUserIDForeignAttribute.cs" />
     <Compile Include="Plugin\CustomAwarePlugin.cs" />
+    <Compile Include="Plugin\CustomUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
