@@ -25,15 +25,15 @@
         </layout>
         <data>
             <SiteMap>
-                <row Title="Custom Aware History" Url="~/Pages/HA/HACA4001.aspx" ScreenID="HACA4001" NodeID="7ab28e9d-f7ea-477f-bd99-3d40a233ce30" ParentID="00000000-0000-0000-0000-000000000000">
-                    <MUIScreen IsPortal="0" WorkspaceID="b6902036-c01f-44cb-84ff-340da661381b" Order="10" SubcategoryID="3979c713-17f5-49c3-839e-3602cb043bcf" />
+                <row Title="Publish History" Url="~/Pages/HA/HACA4001.aspx" ScreenID="HACA4001" NodeID="c4d43e0a-b5e6-45c8-9aa9-d48ae6338d07" ParentID="00000000-0000-0000-0000-000000000000">
+                    <MUIScreen IsPortal="0" WorkspaceID="b6902036-c01f-44cb-84ff-340da661381b" Order="160" SubcategoryID="6d40b0b6-18f4-4139-adac-8ec8cb2a17ea" />
                 </row>
             </SiteMap>
             <MUIWorkspace>
                 <row IsPortal="0" WorkspaceID="b6902036-c01f-44cb-84ff-340da661381b" Order="148.625" Title="Customization" Icon="extension" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" ScreenID="WSCS0000" IsSystem="0" />
             </MUIWorkspace>
             <MUISubcategory>
-                <row IsPortal="0" SubcategoryID="3979c713-17f5-49c3-839e-3602cb043bcf" Order="32" Name="Activities" Icon="" IsSystem="0" />
+                <row IsPortal="0" SubcategoryID="6d40b0b6-18f4-4139-adac-8ec8cb2a17ea" Order="128" Name="Profiles" Icon="" IsSystem="0" />
             </MUISubcategory>
             <MUIArea>
                 <row IsPortal="0" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" Order="30" Name="Configuration" />

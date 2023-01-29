@@ -9,6 +9,12 @@
             </AddItem>
             <AddItem>
                 <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
+                    <Prop Key="DataField" Value="UsrAuthorComments" />
+                    <Prop Key="Width" Value="70" />
+                </PXGridColumn>
+            </AddItem>
+            <AddItem>
+                <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
                     <Prop Key="DataField" Value="UsrAuthorEmail" />
                     <Prop Key="Width" Value="280" />
                 </PXGridColumn>
@@ -19,13 +25,7 @@
                     <Prop Key="Width" Value="140" />
                 </PXGridColumn>
             </AddItem>
-            <AddItem>
-                <PXGridColumn TypeFullName="PX.Web.UI.PXGridColumn">
-                    <Prop Key="DataField" Value="UsrAuthorComments" />
-                    <Prop Key="Width" Value="70" />
-                </PXGridColumn>
-            </AddItem>
-            <PXGridColumn DataField="Initials" OriginalIndex="7" />
+            <PXGridColumn DataField="CertificationStatus" OriginalIndex="6" />
         </Children>
     </PXGridLevel>
 </Page>
