@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Attributes\HAAggregateAttribute.cs" />
     <Compile Include="Attributes\HADBByIDAttribute.cs" />
+    <Compile Include="Attributes\HADBDateTime.cs" />
     <Compile Include="DACExt\CustProjectExt.cs" />
     <Compile Include="DAC\HAPublishHistoryDetail.cs" />
     <Compile Include="DAC\HAPublishHistory.cs" />

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Web;
+using static PX.Api.SYMapping;
 
 namespace HA.Objects.Summit2023.Epsilon.CustomAware {
 
@@ -46,14 +47,14 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
                 var machineName = installProvider.GetMachineName();
                 var userName = installProvider.GetUserName();
                 var scopeUser = PXInstanceHelper.ScopeUser;
-                var versions = installProvider.GetVersions().Select(obj => {
-                    WriteLog($"{obj.ComponentName}/{obj.ComponentType}/{obj.Version}");
-                    return new {
-                        obj.ComponentName,
-                        obj.ComponentType,
-                        obj.Version,
-                    };
-                }).ToArray();
+                //var versions = installProvider.GetVersions().Select(obj => {
+                //    WriteLog($"{obj.ComponentName}/{obj.ComponentType}/{obj.Version}");
+                //    return new {
+                //        obj.ComponentName,
+                //        obj.ComponentType,
+                //        obj.Version,
+                //    };
+                //}).ToArray();
                 var projectListGraph = PXGraph.CreateInstance<ProjectList>();
                 var projects = projectListGraph.Projects.SelectMain().Select(row => GetProject(projectListGraph, row)).ToArray();
                 var assem = Assembly.GetAssembly(GetType());
@@ -62,22 +63,24 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
                 var pxDataAssem = Assembly.GetAssembly(typeof(BqlInt));
                 var pxDataAssemName = pxDataAssem.GetName();
                 var webSite = GetWebSite();
-                var json = new {
-                    Companies = companies,
-                    Assembly = assem.FullName,
-                    CodeBase = assem.CodeBase,
-                    Version = $"{assemName.Version.Major}.{assemName.Version.Minor}",
-                    PXAssembly = pxDataAssem.FullName,
-                    PXCodeBase = pxDataAssem.CodeBase,
-                    PXVersion = $"{pxDataAssemName.Version.Major}.{pxDataAssemName.Version.Minor}",
-                    MachineName = machineName,
-                    UserName = userName,
-                    ScopeUser = scopeUser,
-                    Versions = versions,
-                    Projects = projects,
-                    WebSite = webSite,
+                //var json = new {
+                //    Companies = companies,
+                //    Assembly = assem.FullName,
+                //    CodeBase = assem.CodeBase,
+                //    Version = $"{assemName.Version.Major}.{assemName.Version.Minor}",
+                //    PXAssembly = pxDataAssem.FullName,
+                //    PXCodeBase = pxDataAssem.CodeBase,
+                //    PXVersion = $"{pxDataAssemName.Version.Major}.{pxDataAssemName.Version.Minor}",
+                //    MachineName = machineName,
+                //    UserName = userName,
+                //    ScopeUser = scopeUser,
+                //    //Versions = versions,
+                //    //Projects = projects,
+                //    WebSite = webSite,
 
-                };
+                //};
+                int recordID = SaveToHistory();
+                SaveToHistoryDetails(recordID, projects);
                 //var jsonStr = JsonConvert.SerializeObject(json);
                 //var jsonFormatted = JValue.Parse(jsonStr).ToString(Formatting.Indented);
                 //SendToWebHook(jsonStr);
@@ -86,20 +89,30 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
             }
         }
 
-        //private void SendToWebHook(string jsonStr)
-        //{
-        //    try
-        //    {
-        //        HttpClient client = new HttpClient();
-        //        var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
-        //        client.PostAsync(WEB_HOOK_URL, content);
-        //        WriteLog("WebHook notified at : " + WEB_HOOK_URL);
-        //    }
-        //    catch
-        //    {
-        //        // Silent
-        //    }
-        //}
+        private void SaveToHistoryDetails(int recordID, object[] projects) {
+            //throw new NotImplementedException();
+        }
+
+        private int SaveToHistory() {
+            DateTime utcNow = PXTimeZoneInfo.UtcNow;
+            Guid? userID = new Guid?(PXAccess.GetUserID());
+            var compName = PXAccess.GetCompanyName();
+            using (PXTransactionScope transactionScope = new PXTransactionScope()) {
+                var histFields = new PXDataFieldAssign[] {
+                    new PXDataFieldAssign<HAPublishHistory.userID>(userID),
+                    new PXDataFieldAssign<HAPublishHistory.tenantId>(compName),
+                    //new PXDataFieldAssign<HAPublishHistory.Tstamp>(PXDatabase.SelectTimeStamp()),
+                    new PXDataFieldAssign<HAPublishHistory.createdByID>(userID),
+                    new PXDataFieldAssign<HAPublishHistory.createdDateTime>(utcNow),
+                    new PXDataFieldAssign<HAPublishHistory.lastModifiedByID>(userID),
+                    new PXDataFieldAssign<HAPublishHistory.lastModifiedDateTime>(utcNow)
+                };
+                var inserted = PXDatabase.Insert<HAPublishHistory>(histFields);
+                int recordID = Convert.ToInt32(PXDatabase.SelectIdentity().Value);
+                transactionScope.Complete();
+                return recordID;
+            }
+        }
 
         private object GetWebSite() {
             if (HttpContext.Current == null || HttpContext.Current.Request == null) {
@@ -135,21 +148,24 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
             }
         }
 
-        private object GetProject(ProjectList projectListGraph, CustProject row) {
+        public class Project { 
+            public string Name { get; set; } 
+            public string Description { get; set; }
+            public int? Level { get; set; }
+            public DateTime? LastModifiedDateTime { get; set; }
+            public Project(CustProject proj, bool? isPublished, string screenNames) {
+                Level = proj.Level;
+                Name = proj.Name;
+                Description = proj.Description;
+                LastModifiedDateTime = proj.LastModifiedDateTime;
+            }
+        }
 
+        private Project GetProject(ProjectList projectListGraph, CustProject row) {
             string screenNames = (string)FieldSelecting<CustProject.screenNames>(projectListGraph, row) as string;
-            bool? isPublished = FieldSelecting<CustProject.isPublished>(projectListGraph, row) as bool?;
-
-            WriteLog($"{row.Level}/{row.Name}/{row.Description}/{isPublished}/{row.LastModifiedDateTime}/{screenNames}");
-            return new {
-
-                row.Level,
-                row.Name,
-                row.Description,
-                IsPublished = isPublished,
-                ScreenNames = screenNames,
-                row.LastModifiedDateTime,
-            };
+            bool? isPublished = (bool?) FieldSelecting<CustProject.isPublished>(projectListGraph, row) as bool?;
+            //WriteLog($"{row.Level}/{row.Name}/{row.Description}/{isPublished}/{row.LastModifiedDateTime}/{screenNames}");
+            return new Project(row, isPublished, screenNames);
         }
 
         private static object FieldSelecting<Field>(ProjectList projectListGraph, object row) where Field : IBqlField {
