@@ -15,7 +15,7 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
 
         public PXAction<HAPublishHistory> ViewPublishHistory;
         [PXUIField(DisplayName = "View Publish History", Enabled = true, MapEnableRights = PXCacheRights.Update, MapViewRights = PXCacheRights.Update)]
-        [PXProcessButton()]
+        [PXButton()]
         public virtual void viewPublishHistory()
         {
 
@@ -40,7 +40,7 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
 
             // if all is well then redirect the entire page
             //if (graph.Document.Current != null)
-                throw new PXRedirectRequiredException(graph, true, "Publish History");
+            throw new PXRedirectRequiredException(graph, true, "Publish History");
 
         }
 

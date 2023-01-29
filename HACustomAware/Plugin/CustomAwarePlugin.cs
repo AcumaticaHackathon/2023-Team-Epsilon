@@ -211,6 +211,8 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
                 CustCreatedDateTime = row.CreatedDateTime,
                 DevelopedBy= row.DevelopedBy,
                 IsPublished= isPublished,
+                IsWorking = row.IsWorking,
+                SortOrder = row.Level,
                 ProjID= row.ProjID,
                 ScreenNames= screenNames,
                 AuthorName = projectExt.UsrAuthorName,
