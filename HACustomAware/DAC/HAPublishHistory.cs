@@ -69,8 +69,8 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
 
         #region CreatedDateTime
         public abstract class createdDateTime : BqlDateTime.Field<createdDateTime> { }
-        [PXDBCreatedDateTime]
-        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.CreatedDateTime, Enabled = false)]
+        [PXDBCreatedDateTime()]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.CreatedDateTime, Visibility = PXUIVisibility.SelectorVisible, Enabled = false)]
         public virtual DateTime? CreatedDateTime { get; set; }
         #endregion
 
