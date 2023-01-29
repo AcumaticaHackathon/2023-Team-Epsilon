@@ -1,0 +1,18 @@
+﻿<Sql TableName="HAPublishHistory" TableSchemaXml="#CDATA">
+    <CDATA name="TableSchemaXml"><![CDATA[<table name="HAPublishHistory">
+  <col name="CompanyID" type="Int" default="Zero" />
+  <col name="RecordID" type="Int" identity="true" />
+  <col name="UserID" type="UniqueIdentifier" />
+  <col name="TenantId" type="NVarChar(255)" nullable="true" />
+  <col name="NoteID" type="UniqueIdentifier" />
+  <col name="CreatedByID" type="UniqueIdentifier" />
+  <col name="CreatedDateTime" type="DateTime" />
+  <col name="LastModifiedByID" type="UniqueIdentifier" />
+  <col name="LastModifiedDateTime" type="DateTime" />
+  <col name="tstamp" type="Timestamp" />
+  <index name="HAPublishHistory_PK" clustered="true" primary="true" unique="true">
+    <col name="CompanyID" />
+    <col name="RecordID" />
+  </index>
+</table>]]></CDATA>
+</Sql>
