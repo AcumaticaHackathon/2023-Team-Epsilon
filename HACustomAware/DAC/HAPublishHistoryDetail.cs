@@ -85,26 +85,22 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         #endregion
 
         #region CustCreatedByID
-        [PXDBCreatedByID]
-        [PXUIField(DisplayName = "Owner", Visibility = PXUIVisibility.SelectorVisible, Enabled = true)]
+        [HADBByID(DisplayName = "Cust. Imported By")]
         public virtual Guid? CustCreatedByID { get; set; }
         #endregion
 
         #region CustCreatedDateTime
-        [PXDBCreatedDateTime(PreserveTime = true)]
-        [PXUIField(DisplayName = "Creation Date", Visible = true, Enabled = false)]
+        [HADBDateTime(DisplayName = "Cust. Imported On")]
         public virtual DateTime? CustCreatedDateTime { get; set; }
         #endregion
 
         #region CustLastModifiedByID
-        [PXDBLastModifiedByID]
-        [PXUIField(DisplayName = "Last Modified By", Visible = true, Enabled = false)]
+        [HADBByID(DisplayName = "Cust. Modified By")]
         public virtual Guid? CustLastModifiedByID { get; set; }
         #endregion
 
         #region CustLastModifiedDateTime
-        [PXDBLastModifiedDateTime(PreserveTime = true)]
-        [PXUIField(DisplayName = "Last Modified On", Visible = true, Enabled = false)]
+        [HADBDateTime(DisplayName = "Cust. Modified On")]
         public virtual DateTime? CustLastModifiedDateTime { get; set; }
         #endregion
 

@@ -41,6 +41,13 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         public virtual Guid? UserID { get; set; }
         #endregion
 
+        #region TenantId
+        public abstract class tenantId : BqlString.Field<tenantId> { }
+        [PXDBString(255)]
+        [PXUIField(DisplayName = "Tenant", IsReadOnly = true)]
+        public string TenantId { get; set; }
+        #endregion
+
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }
         [PXNote]
