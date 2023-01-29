@@ -133,7 +133,7 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         #region CustCreatedByID
         public abstract class custCreatedByID : BqlGuid.Field<custCreatedByID> { }
         [HADBByID(DisplayName = "Cust. Imported By")]
-        [PXSelector(typeof(Search<Users.fullName, Where<Users.pKID, Equal<Current<custCreatedByID>>>>))]
+        [PXSelector(typeof(Search<Users.pKID, Where<Users.pKID, Equal<Current<custCreatedByID>>>>), DescriptionField = typeof(Users.fullName))]
         public virtual Guid? CustCreatedByID { get; set; }
         #endregion
 
@@ -146,7 +146,8 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         #region CustLastModifiedByID
         public abstract class custLastModifiedByID : BqlGuid.Field<custLastModifiedByID> { }
         [HADBByID(DisplayName = "Cust. Modified By")]
-        [PXSelector(typeof(Search<Users.fullName, Where<Users.pKID, Equal<Current<custLastModifiedByID>>>>))]
+        [PXSelector(typeof(Search<Users.pKID, Where<Users.pKID, Equal<Current<custLastModifiedByID>>>>), 
+            DescriptionField = typeof(Users.fullName))]
         public virtual Guid? CustLastModifiedByID { get; set; }
         #endregion
 

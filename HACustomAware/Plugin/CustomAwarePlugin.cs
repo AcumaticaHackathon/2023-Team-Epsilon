@@ -127,11 +127,11 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         private int SaveToHistory() {
             DateTime utcNow = PXTimeZoneInfo.UtcNow;
             Guid? userID = new Guid?(PXAccess.GetUserID());
-            var compName = PXAccess.GetCompanyName();
+            //var compName = PXAccess.Provider.GetCompanyID();
             using (PXTransactionScope transactionScope = new PXTransactionScope()) {
                 var histFields = new PXDataFieldAssign[] {
                     new PXDataFieldAssign<HAPublishHistory.userID>(userID),
-                    new PXDataFieldAssign<HAPublishHistory.tenantId>(compName),
+                    //new PXDataFieldAssign<HAPublishHistory.tenantId>(compName),
                     //new PXDataFieldAssign<HAPublishHistory.Tstamp>(PXDatabase.SelectTimeStamp()),
                     new PXDataFieldAssign<HAPublishHistory.noteID>(Guid.NewGuid()),
                     new PXDataFieldAssign<HAPublishHistory.createdByID>(userID),
