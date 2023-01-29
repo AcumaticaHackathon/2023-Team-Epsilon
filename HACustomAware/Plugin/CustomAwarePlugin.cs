@@ -13,7 +13,6 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Web;
-using static PX.Api.SYMapping;
 
 namespace HA.Objects.Summit2023.Epsilon.CustomAware {
 
@@ -77,20 +76,52 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
                 //    //Versions = versions,
                 //    //Projects = projects,
                 //    WebSite = webSite,
-
                 //};
                 int recordID = SaveToHistory();
                 SaveToHistoryDetails(recordID, projects);
-                //var jsonStr = JsonConvert.SerializeObject(json);
-                //var jsonFormatted = JValue.Parse(jsonStr).ToString(Formatting.Indented);
-                //SendToWebHook(jsonStr);
             } catch (Exception ex) {
                 WriteLog(ex.Message);
             }
         }
 
-        private void SaveToHistoryDetails(int recordID, object[] projects) {
-            //throw new NotImplementedException();
+        private void SaveToHistoryDetails(int recordID, HAPublishHistoryDetail[] projects) {
+            using (PXTransactionScope transactionScope = new PXTransactionScope()) {
+                DateTime utcNow = PXTimeZoneInfo.UtcNow;
+                Guid? userID = new Guid?(PXAccess.GetUserID());
+                int lineNbr = 1;
+                foreach (var proj in projects) {
+                    var histFields = new PXDataFieldAssign[] {
+                        new PXDataFieldAssign<HAPublishHistoryDetail.recordID>(recordID),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.lineNbr>(lineNbr),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.level>(proj.Level),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.projID>(proj.ProjID),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.name>(proj.Name),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.description>(proj.Description),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.developedBy>(proj.DevelopedBy),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.custLastModifiedByID>(proj.CustLastModifiedByID),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.custLastModifiedDateTime>(proj.CustLastModifiedDateTime),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.custCreatedByID>(proj.CustCreatedByID),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.custCreatedDateTime>(proj.CustCreatedDateTime),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.screenNames>(proj.ScreenNames),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.authorComments>(proj.AuthorComments),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.isPublished>(proj.IsPublished),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.isWorking>(proj.IsWorking),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.authorComments>(proj.AuthorComments),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.authorEmail>(proj.AuthorEmail),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.authorName>(proj.AuthorName),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.authorPhone>(proj.AuthorPhone),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.noteID>(Guid.NewGuid()),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.createdByID>(userID),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.createdDateTime>(utcNow),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.lastModifiedByID>(userID),
+                        new PXDataFieldAssign<HAPublishHistoryDetail.lastModifiedDateTime>(utcNow)
+                    };
+                    var inserted = PXDatabase.Insert<HAPublishHistory>(histFields);
+                    lineNbr++;
+                }
+                transactionScope.Complete();
+            }
+            
         }
 
         private int SaveToHistory() {
@@ -102,6 +133,7 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
                     new PXDataFieldAssign<HAPublishHistory.userID>(userID),
                     new PXDataFieldAssign<HAPublishHistory.tenantId>(compName),
                     //new PXDataFieldAssign<HAPublishHistory.Tstamp>(PXDatabase.SelectTimeStamp()),
+                    new PXDataFieldAssign<HAPublishHistory.noteID>(Guid.NewGuid()),
                     new PXDataFieldAssign<HAPublishHistory.createdByID>(userID),
                     new PXDataFieldAssign<HAPublishHistory.createdDateTime>(utcNow),
                     new PXDataFieldAssign<HAPublishHistory.lastModifiedByID>(userID),
@@ -148,24 +180,36 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
             }
         }
 
-        public class Project { 
-            public string Name { get; set; } 
-            public string Description { get; set; }
-            public int? Level { get; set; }
-            public DateTime? LastModifiedDateTime { get; set; }
-            public Project(CustProject proj, bool? isPublished, string screenNames) {
-                Level = proj.Level;
-                Name = proj.Name;
-                Description = proj.Description;
-                LastModifiedDateTime = proj.LastModifiedDateTime;
-            }
-        }
+        //public class Project { 
+        //    public string Name { get; set; } 
+        //    public string Description { get; set; }
+        //    public int? Level { get; set; }
+        //    public DateTime? LastModifiedDateTime { get; set; }
+        //    public Project(CustProject proj, bool? isPublished, string screenNames) {
+        //        Level = proj.Level;
+        //        Name = proj.Name;
+        //        Description = proj.Description;
+        //        LastModifiedDateTime = proj.LastModifiedDateTime;
+        //    }
+        //}
 
-        private Project GetProject(ProjectList projectListGraph, CustProject row) {
+        private HAPublishHistoryDetail GetProject(ProjectList projectListGraph, CustProject row) {
             string screenNames = (string)FieldSelecting<CustProject.screenNames>(projectListGraph, row) as string;
             bool? isPublished = (bool?) FieldSelecting<CustProject.isPublished>(projectListGraph, row) as bool?;
             //WriteLog($"{row.Level}/{row.Name}/{row.Description}/{isPublished}/{row.LastModifiedDateTime}/{screenNames}");
-            return new Project(row, isPublished, screenNames);
+            return new HAPublishHistoryDetail() {
+                Level = row.Level,
+                Name = row.Name,
+                Description = row.Description,
+                CustLastModifiedDateTime = row.LastModifiedDateTime,
+                CustLastModifiedByID = row.LastModifiedByID,
+                CustCreatedByID = row.CreatedByID,
+                CustCreatedDateTime = row.CreatedDateTime,
+                DevelopedBy= row.DevelopedBy,
+                IsPublished= isPublished,
+                ProjID= row.ProjID,
+                ScreenNames= screenNames,
+            };
         }
 
         private static object FieldSelecting<Field>(ProjectList projectListGraph, object row) where Field : IBqlField {
