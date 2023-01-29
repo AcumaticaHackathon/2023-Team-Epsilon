@@ -58,16 +58,33 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         public virtual Guid? ProjID { get; set; }
         #endregion
 
+        #region Name
+        public abstract class name : BqlString.Field<name> { }
+        [PXDBString(255, InputMask = "", IsUnicode = true)]
+        [PXUIField(DisplayName = "Project Name", Visibility = PXUIVisibility.SelectorVisible)]
+        [PXSelector(typeof(name))]
+        public virtual string Name { get; set; }
+        #endregion
+
         #region Description
         public abstract class description : BqlString.Field<description> { }
-        [PXDBString(256)]
+        [PXDBString(256, IsUnicode = true)]
         [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible)]
         [PX.Data.EP.PXFieldDescription]
         public virtual string Description { get; set; }
         #endregion
 
+        #region Level
+        public abstract class level : BqlString.Field<level> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Level")]
+        public virtual int? Level { get; set; }
+        #endregion
+
         #region DevelopedBy
+        public abstract class developedBy : BqlString.Field<developedBy> { }
         [PXDBString(60, IsUnicode = true)]
+        [PXUIField(DisplayName = "Developed By", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string DevelopedBy { get; set; }
         #endregion
 
@@ -77,34 +94,39 @@ namespace HA.Objects.Summit2023.Epsilon.CustomAware {
         public bool? IsPublished { get; set; }
         #endregion
 
-        #region IsWorking
-        [PXDBBool]
-        [PXDefault(false)]
-        [PXUIField(DisplayName = "Selected")]
-        public virtual bool? IsWorking { get; set; }
-        #endregion
+        //#region IsWorking
+        //[PXDBBool]
+        //[PXDefault(false)]
+        //[PXUIField(DisplayName = "Selected")]
+        //public virtual bool? IsWorking { get; set; }
+        //#endregion
 
         #region CustCreatedByID
+        public abstract class custCreatedByID : BqlGuid.Field<custCreatedByID> { }
         [HADBByID(DisplayName = "Cust. Imported By")]
         public virtual Guid? CustCreatedByID { get; set; }
         #endregion
 
         #region CustCreatedDateTime
+        public abstract class custCreatedDateTime : BqlDateTime.Field<custCreatedDateTime> { }
         [HADBDateTime(DisplayName = "Cust. Imported On")]
         public virtual DateTime? CustCreatedDateTime { get; set; }
         #endregion
 
         #region CustLastModifiedByID
+        public abstract class custLastModifiedByID : BqlGuid.Field<custLastModifiedByID> { }
         [HADBByID(DisplayName = "Cust. Modified By")]
         public virtual Guid? CustLastModifiedByID { get; set; }
         #endregion
 
         #region CustLastModifiedDateTime
+        public abstract class custLastModifiedDateTime : BqlDateTime.Field<custLastModifiedDateTime> { }
         [HADBDateTime(DisplayName = "Cust. Modified On")]
         public virtual DateTime? CustLastModifiedDateTime { get; set; }
         #endregion
 
         #region ScreenNames
+        public abstract class screenNames : BqlString.Field<screenNames> { }
         [PXDBText]
         [PXUIField(DisplayName = "Screen Names", Visibility = PXUIVisibility.SelectorVisible, Enabled = false)]
         public string ScreenNames { get; set; }
